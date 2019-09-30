@@ -3,8 +3,16 @@ import pandas as pd
 import numpy as py
 import matplotlib.pyplot as plt
 
+theta0 = 0.0
+theta1 = 0.0
+
+def estimatePrice(mileage):
+    return (theta0 + (theta1 * mileage))
+
+"""
 def estimatePrice(x,theta):
     return np.dot(x,theta)
+"""
 
 def learningRate(x,theta,Y):
     prediction = estimatePrice(x,theta)
@@ -22,7 +30,7 @@ def main():
                 print("Mileage can't be negative, try again:")
         except ValueError:
             print("Error, please enter valid mileage (int):")
-    print(mileage)
+    print(estimatePrice(mileage))
 
 if __name__ == '__main__':
     main()
