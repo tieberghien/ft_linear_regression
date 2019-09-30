@@ -28,7 +28,7 @@ def linearRegression(X, Y):
     theta0 = y_mean - (theta1 * x_mean)
 
     print(theta1, theta0)
-    plotLine(X, Y, theta0, theta1)
+   #plotLine(X, Y, theta0, theta1)
     return (theta0,theta1)
 
 def plotLine(X, Y, theta0, theta1):
@@ -45,7 +45,7 @@ def plotLine(X, Y, theta0, theta1):
     plt.legend()
     plt.show()
 
-def train():
+def main():
     try:
         data = pd.read_csv("data.csv")
     except FileNotFoundError as e:
@@ -57,7 +57,10 @@ def train():
     X = data['km'].values
     Y = data['price'].values
 
-    return (linearRegression(X, Y))
+    theta0, theta1 = linearRegression(X, Y)
+    with open("theta.csv","w+") as f:
+        f.write('0,1\n{0},{1}\n'.format(float(theta0), float(theta1)))
+    f.close()
 
 if __name__ == '__main__':
-    return(train())
+    main()

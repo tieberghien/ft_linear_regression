@@ -2,12 +2,12 @@ import sys
 import pandas as pd
 import numpy as py
 import matplotlib.pyplot as plt
-from train import train
+import train
 
-def estimatePrice(mileage):
-    return (theta0 + (theta1 * mileage))
+def estimatePrice(mileage,theta0,theta1):
+    return (float(theta0) + (float(theta1) * mileage))
 
-def main():
+def predict(theta0,theta1):
     print("Please enter valid mileage (int):")
     for line in sys.stdin:
         line.rstrip()
@@ -19,7 +19,17 @@ def main():
                 print("Mileage can't be negative, try again:")
         except ValueError:
             print("Error, please enter valid mileage (int):")
-    print(estimatePrice(mileage))
+    print(estimatePrice(mileage, theta0, theta1))
 
 if __name__ == '__main__':
-    main()
+    try:
+        data = pd.read_csv("theta.csv")
+    except FileNotFoundError as e:
+        print(e)
+        exit()
+    except pd.errors.EmptyDataError as e:
+        print(e)
+        exit()
+    theta0 = data['0'].values
+    theta1 = data['1'].values   
+    predict(theta0, theta1)
