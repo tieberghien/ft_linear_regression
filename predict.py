@@ -2,6 +2,7 @@ import sys
 import pandas as pd
 import numpy as py
 import matplotlib.pyplot as plt
+from train import train
 
 def estimatePrice(mileage):
     return (theta0 + (theta1 * mileage))
@@ -18,6 +19,7 @@ def main():
                 print("Mileage can't be negative, try again:")
         except ValueError:
             print("Error, please enter valid mileage (int):")
+    print(estimatePrice(mileage))
 
 if __name__ == '__main__':
     main()
