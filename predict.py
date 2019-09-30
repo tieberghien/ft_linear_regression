@@ -25,7 +25,7 @@ if __name__ == '__main__':
     try:
         data = pd.read_csv("theta.csv")
     except FileNotFoundError as e:
-        print(e)
+        predict(0, 0)
         exit()
     except pd.errors.EmptyDataError as e:
         print(e)
