@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 from predict import estimatePrice
 
+max_iters = 700
+precision = getPrecision()
+
 def linearRegression(X, Y):
     x_mean = np.mean(X)
     y_mean = np.mean(Y)
