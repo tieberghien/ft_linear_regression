@@ -29,7 +29,7 @@ def gradientDescent(X, Y):
             numerator += (X[i] - x_mean) * (Y[i] - y_mean)
             denominator += (X[i] - x_mean) ** 2
         theta1 = numerator / denominator
-        theta0 = y_mean - (theta1 * x_mean)
+        theta0 = y_mean - (learning_rate * theta1 * x_mean)
 
     print(theta1, theta0)
     plotLine(X, Y, theta0, theta1)
