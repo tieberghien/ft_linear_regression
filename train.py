@@ -2,20 +2,27 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import style
+from predict import estimatePrice
 
 def linearRegression(X, Y):
     x_mean = np.mean(X)
     y_mean = np.mean(Y)
 
-    n = len(X)
+    m = len(X)
     numerator = 0
     denominator = 0
-    for i in range(n):
+    for i in range(m):
+        numerator += (X[i] - x_mean) * (Y[i] - y_mean)
+        denominator += (X[i] - x_mean) ** 2
+    theta1 = estimatePrice(numerator / denominator)
+    theta0 = estimatePrice(y_mean - (theta1 * x_mean))
+    """
         numerator += (X[i] - x_mean) * (Y[i] - y_mean)
         denominator += (X[i] - x_mean) ** 2
 
     theta1 = numerator / denominator
     theta0 = y_mean - (theta1 * x_mean)
+    """
     print(theta1, theta0)
     plotLine(X, Y, theta0, theta1)
 
