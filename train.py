@@ -8,38 +8,55 @@ max_iters = 1000
 #precision = getPrecision()
 
 def normalize(data):
-    d = (data - min(data)) / (max(data) - min(data))
-    return (d)
+    new = []
+    d = max(data)
+    e = min(data)
+    for i in range(len(data)):
+        new.append((data[i] - e) / (d - e))
+    return (new)
 
-def denormalize(data):
-    d = (data * (max(data) - min(data)) + min(data))
-    return (d)
-
-def gradientDescent(X, Y):
-    x_mean = np.mean(X)
-    y_mean = np.mean(Y)
-
-    m = len(X)
-    tmp0 = 0
-    tmp1 = 0
-    for j in range(0, max_iters):
-        numerator = 0
-        denominator = 0
-        for i in range(0, m):
-            numerator += (X[i] - x_mean) * (Y[i] - y_mean)
-            denominator += (X[i] - x_mean) ** 2
-        theta1 = numerator / denominator
-        theta0 = y_mean - (learning_rate * theta1 * x_mean)
-
-    print(theta1, theta0)
-    plotLine(X, Y, theta0, theta1)
+def denormalize(theta_0,theta_1,X,Y):
+    minx = min(X)
+    miny = min(Y)
+    maxx = max(X)
+    maxy = max(Y)
+    print(theta_0,theta_1)
+    theta0 = (theta_0 + theta_1 * (-minx) / (maxx - minx)) * (maxy - miny) + miny
+    theta1 = (theta_0 + theta_1 * (1.0 - minx) / (maxx - minx)) * (maxy - miny) + miny - theta0
     return (theta0,theta1)
+
+def calculate_error(x, y, m, b):    #Function to calculate error at current m and b
+    error=0
+    for i in range(len(x)):
+        error += ((m*x[i]+b - y[i])**2)
+    error/=len(x)
+    return error
+
+def gradientDescent(theta0,theta1,X,Y):
+    m_gradient=0
+    b_gradient=0
+    n = len(X)
+    for i in range(0,n):
+        b_gradient += (theta1*X[i]+theta0) - Y[i]
+        m_gradient += ((theta1*X[i]+theta0) - Y[i]) * X[i]
+    b_new=theta0-(learning_rate)* (b_gradient / n)
+    m_new=theta1-(learning_rate)* (m_gradient / n)
+    return (b_new, m_new)
+
+def train(X,Y,theta0,theta1):
+    x_norm = normalize(X)
+    y_norm = normalize(Y)
+    for _ in range(max_iters):
+        theta0,theta1 = gradientDescent(theta0,theta1,x_norm,y_norm)
+    #   print(calculate_error(x_norm, y_norm, theta0, theta1))
+    theta0, theta1 = denormalize(theta0,theta1,X,Y)
+    return (theta0, theta1)
 
 def plotLine(X, Y, theta0, theta1):
     x_max = np.max(X) + 100
     x_min = np.min(X) - 100
 
-    x = np.linspace(x_min, x_max, 1000)
+    x = np.linspace(x_min, x_max, 1000) #PAS LEGAL
     y = theta0 + theta1 * x
 
     plt.plot(x, y, color='#00ff00', label='Linear Regression')
@@ -60,11 +77,14 @@ def main():
         exit()
     X = data['km'].values
     Y = data['price'].values
-
-    theta0, theta1 = gradientDescent(X, Y)
+    theta0 = 0
+    theta1 = 0
+    theta0, theta1 = train(X, Y, theta0, theta1)
+    print(theta0,theta1)
     with open("theta.csv","w+") as f:
         f.write('0,1\n{0},{1}\n'.format(float(theta0), float(theta1)))
     f.close()
+    plotLine(X, Y, theta0, theta1)
 
 if __name__ == '__main__':
     main()
