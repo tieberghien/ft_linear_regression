@@ -66,15 +66,17 @@ def plotLine(X,Y,theta0,theta1):
 
 def main():
     try:
-        data = pd.read_csv("data.csv")
+        data = pd.read_csv("data.csv", delimiter=",")
     except FileNotFoundError as e:
-        print(e)
-        exit()
+        exit(e)
     except pd.errors.EmptyDataError as e:
-        print(e)
+        exit(e)
+    try:
+        X = data['km'].values
+        Y = data['price'].values
+    except Exception as e:
+        print("Missing " + str(e))
         exit()
-    X = data['km'].values
-    Y = data['price'].values
     theta0 = 0
     theta1 = 0
     theta0, theta1 = train(X, Y, theta0, theta1)
