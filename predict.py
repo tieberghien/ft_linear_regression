@@ -33,6 +33,9 @@ if __name__ == '__main__':
     except pd.errors.EmptyDataError as e:
         print(e)
         exit()
-    theta0 = data['0'].values
-    theta1 = data['1'].values   
+    try:
+        theta0 = data['0'].values
+        theta1 = data['1'].values
+    except:
+        exit()   
     predict()
