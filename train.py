@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import style
+from optparse import OptionParser
 
 learning_rate = 0.1
 max_iters = 1000
@@ -65,6 +66,10 @@ def plotLine(X,Y,theta0,theta1):
     plt.show()
 
 def main():
+    usage = "usage: %prog [options] arg"
+    parser = OptionParser(usage)
+    parser.add_option("-g", "--graph", action="store_true")
+    (options, args) = parser.parse_args()
     try:
         data = pd.read_csv("data.csv", delimiter=",")
     except FileNotFoundError as e:
@@ -83,7 +88,8 @@ def main():
     with open("theta.csv","w+") as f:
         f.write('0,1\n{0},{1}\n'.format(float(theta0), float(theta1)))
     f.close()
-    plotLine(X, Y, theta0, theta1)
+    if options.graph is True:
+        plotLine(X, Y, theta0, theta1)
 
 if __name__ == '__main__':
     main()
