@@ -5,7 +5,6 @@ from matplotlib import style
 
 learning_rate = 0.1
 max_iters = 1000
-#precision = getPrecision()
 
 def normalize(data):
     new = []
