@@ -55,7 +55,7 @@ def plotLine(X,Y,theta0,theta1):
     x_max = np.max(X) + 100
     x_min = np.min(X) - 100
 
-    x = np.linspace(x_min, x_max, 1000) #PAS LEGAL
+    x = np.linspace(x_min, x_max, 1000)
     y = theta0 + theta1 * x
 
     plt.plot(x, y, color='#00ff00', label='Linear Regression')

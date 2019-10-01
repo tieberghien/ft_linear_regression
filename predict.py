@@ -22,7 +22,7 @@ def predict():
                 print("Mileage can't be negative, try again:")
         except ValueError:
             print("Error, please enter valid mileage (int):")
-    print(estimatePrice(mileage))
+    print("The estimated price for a second-hand car with a given mileage of " + str(mileage) + " would be around " + str(estimatePrice(mileage)))
 
 if __name__ == '__main__':
     try:
