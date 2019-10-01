@@ -24,12 +24,12 @@ def denormalize(theta_0,theta_1,X,Y):
     theta1 = (theta_0 + theta_1 * (1.0 - minx) / (maxx - minx)) * (maxy - miny) + miny - theta0
     return (theta0,theta1)
 
-def calculateError(x,y,m,b):    #Function to calculate error at current m and b
-    error=0
+def calculateError(x,y,m,b):
+    error = 0
     for i in range(len(x)):
-        error += ((m*x[i]+b - y[i])**2)
-    error/=len(x)
-    return error
+        error += ((m *x[i] +b - y[i]) **2)
+    error /= len(x)
+    return (np.sqrt(error))
 
 def gradientDescent(theta0,theta1,X,Y):
     m_gradient=0
@@ -47,7 +47,7 @@ def train(X,Y,theta0,theta1):
     y_norm = normalize(Y)
     for _ in range(max_iters):
         theta0,theta1 = gradientDescent(theta0,theta1,x_norm,y_norm)
-    #   print(calculateError(x_norm, y_norm, theta0, theta1))
+    print(calculateError(x_norm, y_norm, theta0, theta1))
     theta0, theta1 = denormalize(theta0,theta1,X,Y)
     return (theta0, theta1)
 
