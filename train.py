@@ -20,12 +20,11 @@ def denormalize(theta_0,theta_1,X,Y):
     miny = min(Y)
     maxx = max(X)
     maxy = max(Y)
-    print(theta_0,theta_1)
     theta0 = (theta_0 + theta_1 * (-minx) / (maxx - minx)) * (maxy - miny) + miny
     theta1 = (theta_0 + theta_1 * (1.0 - minx) / (maxx - minx)) * (maxy - miny) + miny - theta0
     return (theta0,theta1)
 
-def calculate_error(x, y, m, b):    #Function to calculate error at current m and b
+def calculateError(x,y,m,b):    #Function to calculate error at current m and b
     error=0
     for i in range(len(x)):
         error += ((m*x[i]+b - y[i])**2)
@@ -48,11 +47,11 @@ def train(X,Y,theta0,theta1):
     y_norm = normalize(Y)
     for _ in range(max_iters):
         theta0,theta1 = gradientDescent(theta0,theta1,x_norm,y_norm)
-    #   print(calculate_error(x_norm, y_norm, theta0, theta1))
+    #   print(calculateError(x_norm, y_norm, theta0, theta1))
     theta0, theta1 = denormalize(theta0,theta1,X,Y)
     return (theta0, theta1)
 
-def plotLine(X, Y, theta0, theta1):
+def plotLine(X,Y,theta0,theta1):
     x_max = np.max(X) + 100
     x_min = np.min(X) - 100
 
@@ -80,7 +79,6 @@ def main():
     theta0 = 0
     theta1 = 0
     theta0, theta1 = train(X, Y, theta0, theta1)
-    print(theta0,theta1)
     with open("theta.csv","w+") as f:
         f.write('0,1\n{0},{1}\n'.format(float(theta0), float(theta1)))
     f.close()
