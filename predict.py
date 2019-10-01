@@ -26,7 +26,7 @@ def predict():
 
 if __name__ == '__main__':
     try:
-        data = pd.read_csv("theta.csv")
+        data = pd.read_csv("theta.csv", delimiter=",", dtype="float")
     except FileNotFoundError as e:
         predict()
         exit()
